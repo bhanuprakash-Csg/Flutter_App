@@ -2,3 +2,20 @@ hi i am aading text to name.txt
  adding one more line.
 add second line 
 new change added.
+
+.trageted notification:
+When an issue or anomaly is detected (such as performance degradation, security vulnerability, or infrastructure problem), Dynatrace can automatically notify the appropriate team members
+2.Closed-Loop Remediation refers to an automated process that detects issues or vulnerabilities within a system (such as software applications, infrastructure, or network components) and takes corrective actions to resolve them.
+
+davis AI 
+
+
+mobile applications: 
+1. user experinece:
+active user 
+new user 
+
+and monitor how the users usage of your applications diffrent versions 
+
+
+
