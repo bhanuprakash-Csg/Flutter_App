@@ -1,8 +1,2 @@
 hi i am aading text to name.txt
-i will add something for check the pipeline.
-
-check the ngork is working or not.
-
-i want trigger one more time.
-
-adding trigger  adding more trigger forr jenkins 
+ 
