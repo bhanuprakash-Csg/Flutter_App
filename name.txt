@@ -1,5 +1,4 @@
 hi i am aading text to name.txt
  adding one more line.
 add second line 
-
-adding new task to that.
+new change added.
