@@ -28,4 +28,6 @@ nncinioeifkkf3io
 .trageted notification:
 
 
+	Code Contributions: If you have programming skills and are familiar with the Go programming language, you can contribute code to Kubernetes. You can start by identifying areas of the project that interest you and finding relevant issues or feature requests on the Kubernetes GitHub repository. Fork the repository, make your changes, and submit a pull request for review. Be sure to follow the contribution guidelines provided by the project.
+
 
