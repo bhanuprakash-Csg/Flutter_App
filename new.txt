@@ -1,1 +1,6 @@
 i adde the ngork for reverse proxy i want test it.
+
+
+forecasts issues, resizes disks, and even scales resources automatically. It’s like having a crystal ball for your systems.
+
+Data Detective: Davis analyzes complex dependencies, creates dynamic application maps, and detects anomalies.
