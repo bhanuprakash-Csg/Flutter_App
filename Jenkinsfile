@@ -1,20 +1,20 @@
 pipeline {
 
     options {
-        buildDiscarder(logRotator( 
-            daysToKeepStr: '16', 
-            numToKeepStr: '10'
-        ))
+        buildDiscarder logRotator( 
+                    daysToKeepStr: '16', 
+                    numToKeepStr: '10'
+            )
     }
-
     agent any
-
     stages {
         
         stage('Cleanup Workspace') {
             steps {
                 cleanWs()
+                sh """
                 echo "Cleaned Up Workspace For Project"
+                """
             }
         }
 
@@ -28,17 +28,19 @@ pipeline {
             }
         }
 
-        stage('Unit Testing') {
+        stage(' Unit Testing') {
             steps {
+                sh """
                 echo "Running Unit Tests"
-                // Add your unit testing commands here
+                """
             }
         }
 
         stage('Code Analysis') {
             steps {
+                sh """
                 echo "Running Code Analysis"
-                // Add your code analysis commands here
+                """
             }
         }
 
@@ -47,11 +49,13 @@ pipeline {
                 branch 'develop'
             }
             steps {
+                sh """
                 echo "Building Artifact"
-                // Add your build commands here
+                """
 
+                sh """
                 echo "Deploying Code"
-                // Add your deployment commands here
+                """
             }
         }
 
