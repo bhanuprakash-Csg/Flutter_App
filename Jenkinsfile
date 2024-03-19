@@ -6,7 +6,7 @@ pipeline {
                     numToKeepStr: '10'
             )
     }
-
+    agent any
     stages {
         
         stage('Cleanup Workspace') {
