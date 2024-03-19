@@ -11,10 +11,13 @@ you can create alaerts based on alerts
 
 
 you can craete custom dashboard 
-
-stream the data then create index and search accross the index 
-
+ 
 
 
 
 
+
+
+
+
+https://github.com/databricks/terraform-databricks-examples/blob/main/examples/adb-vnet-injection/variables.t
