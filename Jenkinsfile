@@ -1,20 +1,29 @@
 pipeline {
-
-    options {
-        buildDiscarder logRotator( 
-                    daysToKeepStr: '16', 
-                    numToKeepStr: '10'
-            )
-    }
     agent any
+    
+    options {
+        buildDiscarder(logRotator( 
+            daysToKeepStr: '16', 
+            numToKeepStr: '10'
+        ))
+    }
+
+    triggers {
+        githubPullRequest {
+            adminUsers('your-github-username') // Replace 'your-github-username' with your actual GitHub username
+            branchFilterType('All')
+            branchesFilter {
+                pattern('feature1') // Trigger only for pull requests against the 'feature1' branch
+            }
+        }
+    }
+
     stages {
         
         stage('Cleanup Workspace') {
             steps {
                 cleanWs()
-                sh """
                 echo "Cleaned Up Workspace For Project"
-                """
             }
         }
 
@@ -28,34 +37,30 @@ pipeline {
             }
         }
 
-        stage(' Unit Testing') {
+        stage('Unit Testing') {
             steps {
-                sh """
                 echo "Running Unit Tests"
-                """
+            
             }
         }
 
         stage('Code Analysis') {
             steps {
-                sh """
                 echo "Running Code Analysis"
-                """
+               
             }
         }
 
         stage('Build Deploy Code') {
             when {
-                branch 'feature1'
+                expression { env.CHANGE_TARGET == 'feature1' } // Execute only when the target branch of the PR is 'feature1'
             }
             steps {
-                sh """
                 echo "Building Artifact"
-                """
+              
 
-                sh """
                 echo "Deploying Code"
-                """
+              
             }
         }
 
