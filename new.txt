@@ -4,3 +4,7 @@ i adde the ngork for reverse proxy i want test it.
 forecasts issues, resizes disks, and even scales resources automatically. It’s like having a crystal ball for your systems.
 
 Data Detective: Davis analyzes complex dependencies, creates dynamic application maps, and detects anomalies.
+
+
+
+Documentation: Good documentation is crucial for any open-source project. If you have good writing skills and a solid understanding of Kubernetes concepts, you can contribute by improving the documentation. This can involve writing new documentation, updating existing documentation, or creating tutorials and guides for users and developers.
