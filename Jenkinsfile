@@ -1,65 +1,46 @@
 pipeline {
     agent any
     
-    options {
-        buildDiscarder(logRotator( 
-            daysToKeepStr: '16', 
-            numToKeepStr: '10'
-        ))
-    }
-
     stages {
-        
-        stage('Cleanup Workspace') {
+        stage('Checkout') {
             steps {
-                cleanWs()
-                sh """
-                echo "Cleaned Up Workspace For Project"
-                """
+                // Checkout the source code from the repository
+                git branch: '*/main', url: 'https://github.com/bhanuprakash-Csg/Flutter_App.git'
             }
         }
-
-        stage('Code Checkout') {
+        stage('Build') {
             steps {
-                checkout([
-                    $class: 'GitSCM', 
-                    branches: [[name: '*/main']], 
-                    userRemoteConfigs: [[url: 'https://github.com/bhanuprakash-Csg/Flutter_App.git']]
-                ])
+                // Your build steps go here
+                 echo' the build'
             }
         }
-
-        stage('Unit Testing') {
+        stage('Test') {
             steps {
-                sh """
-                echo "Running Unit Tests"
-                """
+                // Your test steps go here
+                echo 'the test'
             }
         }
-
-        stage('Code Analysis') {
-            steps {
-                sh """
-                echo "Running Code Analysis"
-                """
-            }
-        }
-
-        stage('Build Deploy Code') {
+        stage('Deploy') {
             when {
-                branch 'feature1' // Change branch condition to 'feature1'
+                // Trigger the stage only if the branch is 'main' and the event is a pull request
+                expression { env.CHANGE_BRANCH == 'main' && env.CHANGE_ID != null }
             }
             steps {
-                sh """
-                echo "Building Artifact"
-                """
-
-                sh """
-                echo "Deploying Code"
-                """
+                // Your deployment steps go here
+                echo ' deploy '
             }
         }
-
-    }   
+    }
+    
+    // Post actions
+    post {
+        success {
+            // Your success actions go here
+            echo 'Pipeline succeeded!'
+        }
+        failure {
+            // Your failure actions go here
+            echo 'Pipeline failed!'
+        }
+    }
 }
-
