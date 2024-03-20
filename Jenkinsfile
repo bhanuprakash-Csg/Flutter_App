@@ -44,8 +44,7 @@ pipeline {
                 sh 'flutter pub get' // Example build command
                 sh 'flutter pub upgrade'
                 sh 'flutter clean'
-                sh 'flutter build web'
-                
+                sh 'flutter build web' 
             }
         }
 
