@@ -45,6 +45,7 @@ pipeline {
                 sh 'flutter pub upgrade'
                 sh 'flutter clean'
                 sh 'flutter build web' 
+                // build and deploy  to ec2 instance 
             }
         }
 
