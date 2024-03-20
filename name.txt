@@ -11,3 +11,15 @@ you can create alaerts based on alerts
 
 
 you can craete custom dashboard 
+ 
+
+
+
+
+
+
+
+
+https://github.com/databricks/terraform-databricks-examples/blob/main/examples/adb-vnet-injection/variables.t
+
+
