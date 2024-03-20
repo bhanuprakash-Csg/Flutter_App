@@ -5,19 +5,19 @@ pipeline {
         stage('Checkout') {
             steps {
                 // Checkout the source code from the repository
-                git branch: '*/main', url: 'https://github.com/your/repository.git'
+                git branch: '*/main', url: 'https://github.com/bhanuprakash-Csg/Flutter_App.git'
             }
         }
         stage('Build') {
             steps {
                 // Your build steps go here
-                sh 'mvn clean package'
+                 echo' the build'
             }
         }
         stage('Test') {
             steps {
                 // Your test steps go here
-                sh 'mvn test'
+                echo 'the test'
             }
         }
         stage('Deploy') {
@@ -27,7 +27,7 @@ pipeline {
             }
             steps {
                 // Your deployment steps go here
-                sh 'deploy.sh'
+                echo ' deploy '
             }
         }
     }
