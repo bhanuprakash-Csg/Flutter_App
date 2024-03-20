@@ -2,13 +2,6 @@ pipeline {
 
     agent any
 
-    options {
-        buildDiscarder logRotator( 
-                    daysToKeepStr: '16', 
-                    numToKeepStr: '10'
-            )
-    }
-
     stages {
         
         stage('Cleanup Workspace') {
@@ -29,35 +22,30 @@ pipeline {
                 ])
             }
         }
-
-        stage(' Unit Testing') {
+        stage('Adding dependencies') {
             steps {
-                sh """
-                echo "Running Unit Tests"
-                """
+                sh 'flutter pub get' // Example build command
+                sh 'flutter pub upgrade'
             }
         }
-
-        stage('Code Analysis') {
+        stage('Build') {
             steps {
-                sh """
-                echo "Running Code Analysis"
-                """
+                sh 'flutter clean' // Example test command
+                sh 'flutter build web'
             }
         }
+       
 
         stage('Build Deploy Code') {
             when {
-                branch 'develop'
+                branch 'feature1'
             }
             steps {
-                sh """
-                echo "Building Artifact"
-                """
-
-                sh """
-                echo "Deploying Code"
-                """
+                sh 'flutter pub get' // Example build command
+                sh 'flutter pub upgrade'
+                sh 'flutter clean'
+                sh 'flutter build web'
+                
             }
         }
 
