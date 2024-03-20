@@ -1,65 +1,55 @@
 pipeline {
-
     agent any
 
-    options {
-        buildDiscarder logRotator( 
-                    daysToKeepStr: '16', 
-                    numToKeepStr: '10'
-            )
-    }
-
     stages {
-        
-        stage('Cleanup Workspace') {
+        stage('Checkout') {
             steps {
-                cleanWs()
-                sh """
-                echo "Cleaned Up Workspace For Project"
-                """
-            }
-        }
-
-        stage('Code Checkout') {
-            steps {
-                checkout([
+                 checkout([
                     $class: 'GitSCM', 
                     branches: [[name: '*/main']], 
-                    userRemoteConfigs: [['https://github.com/bhanuprakash-Csg/Flutter_App.git']]
+                    userRemoteConfigs: [[url: 'https://github.com/bhanuprakash-Csg/Flutter_App.git']]
                 ])
             }
         }
 
-        stage(' Unit Testing') {
+        stage('Build and Test') {
             steps {
-                sh """
-                echo "Running Unit Tests"
-                """
+                // Your build and test steps go here
+                // For example:
+                echo'npm install'
+                echo 'npm test'
             }
         }
 
-        stage('Code Analysis') {
-            steps {
-                sh """
-                echo "Running Code Analysis"
-                """
-            }
-        }
-
-        stage('Build Deploy Code') {
+        stage('Deploy') {
             when {
-                branch 'develop'
+                // Only deploy if the PR is from feature1 to main
+                expression {
+                    return env.CHANGE_TARGET == 'main' && env.CHANGE_BRANCH == 'feature1'
+                }
             }
             steps {
-                sh """
-                echo "Building Artifact"
-                """
-
-                sh """
-                echo "Deploying Code"
-                """
+                // Your deployment steps go here
+                // For example:
+                echo'kubectl apply -f deployment.yaml'
             }
         }
+    }
 
-    }   
+    post {
+        success {
+            // Notify success
+            echo 'Pipeline completed successfully!'
+        }
+        failure {
+            // Notify failure
+            echo 'Pipeline failed!'
+        }
+        always {
+            // Execute build and test steps again for subsequent PRs
+            if (env.CHANGE_TARGET == 'main' && env.CHANGE_BRANCH == 'feature1') {
+                build job: 'jenkins_multi_branch', parameters: [string(name: 'BRANCH', value: 'feature1')]
+            }
+        }
+    }
 }
