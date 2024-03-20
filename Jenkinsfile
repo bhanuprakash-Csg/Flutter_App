@@ -1,46 +1,55 @@
 pipeline {
     agent any
-    
+
     stages {
         stage('Checkout') {
             steps {
-                // Checkout the source code from the repository
-                git branch: '*/main', url: 'https://github.com/bhanuprakash-Csg/Flutter_App.git'
+                 checkout([
+                    $class: 'GitSCM', 
+                    branches: [[name: '*/main']], 
+                    userRemoteConfigs: [[url: 'https://github.com/bhanuprakash-Csg/Flutter_App.git']]
+                ])
             }
         }
-        stage('Build') {
+
+        stage('Build and Test') {
             steps {
-                // Your build steps go here
-                 echo' the build'
+                // Your build and test steps go here
+                // For example:
+                echo'npm install'
+                echo 'npm test'
             }
         }
-        stage('Test') {
-            steps {
-                // Your test steps go here
-                echo 'the test'
-            }
-        }
+
         stage('Deploy') {
             when {
-                // Trigger the stage only if the branch is 'main' and the event is a pull request
-                expression { env.CHANGE_BRANCH == 'main' && env.CHANGE_ID != null }
+                // Only deploy if the PR is from feature1 to main
+                expression {
+                    return env.CHANGE_TARGET == 'main' && env.CHANGE_BRANCH == 'feature1'
+                }
             }
             steps {
                 // Your deployment steps go here
-                echo ' deploy '
+                // For example:
+                echo'kubectl apply -f deployment.yaml'
             }
         }
     }
-    
-    // Post actions
+
     post {
         success {
-            // Your success actions go here
-            echo 'Pipeline succeeded!'
+            // Notify success
+            echo 'Pipeline completed successfully!'
         }
         failure {
-            // Your failure actions go here
+            // Notify failure
             echo 'Pipeline failed!'
+        }
+        always {
+            // Execute build and test steps again for subsequent PRs
+            if (env.CHANGE_TARGET == 'main' && env.CHANGE_BRANCH == 'feature1') {
+                build job: 'jenkins_multi_branch', parameters: [string(name: 'BRANCH', value: 'feature1')]
+            }
         }
     }
 }
