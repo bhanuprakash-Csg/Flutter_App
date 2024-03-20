@@ -45,6 +45,7 @@ pipeline {
                 sh 'flutter pub upgrade'
                 sh 'flutter clean'
                 sh 'flutter build web' 
+                // adding the comment that should triggre
             }
         }
 
